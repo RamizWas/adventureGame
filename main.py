@@ -3,23 +3,17 @@ import turtle
 import random
 
 
-def print_delay(text, delay=0.05):
-    for char in text:
-        print(char, end='', flush=True)
+def print_delay(text, delay=1):
+    lines = text.splitlines()
+    for line in lines:
+        print(line)
         time.sleep(delay)
-    print()
 
 
 def draw_logo():
-    screen = turtle.Screen()
-    screen.bgcolor("white")
 
-    # Set up the turtle
-    logo_turtle = turtle.Turtle()
-    logo_turtle.speed(0)
-    logo_turtle.color("black")
-    logo_turtle.penup()
-    logo_turtle.hideturtle()
+
+
 
     # Define the ASCII art logo as a list of strings
     logo = [
@@ -32,19 +26,12 @@ def draw_logo():
         "|______| |__| |__|  |___|  |__| |__||_______||_______||__| |__|  |___|  "
     ]
 
-    # Set the starting position for drawing
-    start_x, start_y = -220, 180
-    x, y = start_x, start_y
 
     # Draw the logo character by character
     for line in logo:
-        logo_turtle.goto(x, y)
-        print_delay(line)
-        y -= 25
+        print_delay(line,0.05)
+        print_delay("",1)
 
-    # Hide the turtle and display the logo
-    logo_turtle.hideturtle()
-    turtle.done()
 
 
 def start_game():
@@ -63,6 +50,28 @@ def start_game():
         start_game()
 
 
+def find_treasure():
+    print_delay("As you follow the path, you discover a hidden treasure chest!")
+    chest_locked = random.choice([True, False])
+
+    if chest_locked:
+        print_delay("The chest is locked. You need to find a key to unlock it.")
+        if "rusty key" in inventory:
+            print_delay("You use the rusty key to unlock the chest.")
+            print_delay("Inside the chest, you find a valuable gemstone!")
+            add_item("gemstone")
+        else:
+            print_delay("You don't have the key to unlock the chest. Continue exploring.")
+    else:
+        print_delay("The chest is already unlocked.")
+        print_delay("Inside the chest, you find a map and a valuable gemstone!")
+        add_item("treasure map")
+        add_item("gemstone")
+
+    print_delay("You decide to head back to the beach.")
+    beach()
+
+
 def explore_forest():
     encounter_animal = random.randint(0, 1)
     if encounter_animal:
@@ -73,6 +82,7 @@ def explore_forest():
         choice = input("Enter the number of your choice: ")
         if choice == "1":
             print_delay("You couldn't outrun the animal. Game over!")
+            play_again()
             return
         elif choice == "2":
             print_delay("You successfully hide in the tree until the animal goes away.")
@@ -182,6 +192,23 @@ def combine_items(item1, item2):
         print_delay("The combination does not yield any results.")
 
 
+def play_again():
+    print_delay("Would you like to play again?")
+    print_delay("1. Yes")
+    print_delay("2. No")
+    choice = input("Enter the number of your choice: ")
+    if choice == "1":
+        inventory.clear()
+        draw_logo()
+        if introduce_random_elements():
+            start_game()
+    elif choice == "2":
+        print_delay("Thanks for playing. Goodbye!")
+    else:
+        print_delay("Invalid choice. Please try again.")
+        play_again()
+
+
 def introduce_random_elements():
     # Randomize the starting location of the rusty key
     if random.randint(0, 1) == 1:
@@ -197,6 +224,7 @@ def introduce_random_elements():
         choice = input("Enter the number of your choice: ")
         if choice == "1":
             print_delay("You couldn't outrun the animal. Game over!")
+            play_again()
             return False
         elif choice == "2":
             print_delay("You successfully hide in the tree until the animal goes away.")
