@@ -28,24 +28,8 @@ def get_valid_input(message, options):
         if choice.isdigit() and int(choice) in options:
             return int(choice)
         else:
-            print_delay("Invalid input. Please enter a valid option.", color=random.choice(colors))
-
-
-def draw_logo():
-    # Define the ASCII art logo as a list of strings
-    logo = [
-        " ______   _______  __   __  _______  __   __  _______  __   __  _______ ",
-        "|      | |   _   ||  | |  ||   _   ||  | |  ||       ||  | |  ||       |",
-        "|  _    ||  |_|  ||  |_|  ||  |_|  ||  | |  ||   _   ||  |_|  ||_     _|",
-        "| | |   ||       ||       ||       ||  |_|  ||  | |  ||       |  |   |  ",
-        "| |_|   ||       ||       ||       ||       ||  |_|  ||       |  |   |  ",
-        "|       ||   _   | |     | |   _   ||       ||       ||   _   |  |   |  ",
-        "|______| |__| |__|  |___|  |__| |__||_______||_______||__| |__|  |___|  "
-    ]
-
-    # Draw the logo character by character
-    for line in logo:
-        print_delay(line)
+            print_delay("Invalid input. Please enter"
+                        " a valid option.", color=random.choice(colors))
 
 
 def start_game():
@@ -73,7 +57,8 @@ def explore_forest():
         print_delay("2. Climb a tree to hide.")
         choice = get_valid_input("Enter the number of your choice: ", [1, 2])
         if choice == 1:
-            print_delay("You couldn't outrun the animal. Game over!", color=colors[0])
+            print_delay("You couldn't outrun the animal."
+                        " Game over!", color=colors[0])
             play_again()
             return
         elif choice == 2:
@@ -207,7 +192,6 @@ def play_again():
     choice = get_valid_input("Enter the number of your choice: ", [1, 2])
     if choice == 1:
         inventory.clear()
-        draw_logo()
         if introduce_random_elements():
             start_game()
     elif choice == 2:
@@ -226,6 +210,6 @@ def introduce_random_elements():
 inventory = []
 
 if __name__ == "__main__":
-    draw_logo()
+
     if introduce_random_elements():
         start_game()
