@@ -202,7 +202,7 @@ def play_again():
 
 
 def introduce_random_elements():
-    random.seed()  # Initialize random number generator
+    random.seed()  # Initialize the random number generator
     # Add your random element introduction code here
     return True  # Replace with appropriate condition
 
